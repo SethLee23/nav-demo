@@ -1,0 +1,38 @@
+/*第一步，结构 第二步，创建div和kbd 第三步：监听键盘输入 第四步:对应网址打开 第五步:完善编辑功能，监听获取选择的key 第六步：将每次编辑的网址存储在localstorage中*/
+
+
+
+
+
+*{
+    margin: 0;
+    padding: 0;
+}
+div:nth-child(2){
+   margin-left: 1em;
+}
+div:nth-child(3){
+    margin-left: 2em;
+}
+kbd{
+    text-transform: uppercase;/*又忘记了，减一分*/
+    border: 1px solid red; 
+    width: 4em;
+    height: 4em;
+    display: inline-block;/*内联元素宽高无法确定，要改成inline-block*/
+    position: relative;
+}
+kbd>button{
+    display: none;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+kbd:hover>button{
+    display: inline-block;
+}
+body{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
