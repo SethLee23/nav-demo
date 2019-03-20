@@ -11,17 +11,80 @@
 
 <body>
     <header></header>
-    <main id='mainxxx'>
+    <main>
+    <div class="wrapper"  id='mainxxx'></div>
     </main>
     <footer></footer>
     <script>
-        var keys = {
+//1.初始化键盘
+        var hashA = init()
+        var keys = hashA['keys']
+        var hash = hashA['hash']
+        var hashinstorage = xxx('mdzz')
+        if(hashinstorage){
+            hash = hashinstorage//如果这个档存在，那么就可以直接用这个修改过得版本啦
+        }
+//2.生成键盘      
+       generateKeyboard(keys,hash)
+//3.监听用户动作
+       listenToKeyboard(hash)
+//4.下面是函数工具
+        function xxx(name){
+            return JSON.parse(localStorage.getItem(name) || ('null') )
+        }
+
+        function c(tagname){
+            var element = document.createElement(tagname);
+            return element
+        }
+
+        function createImage(domain){
+            var image = c('img')
+           if(domain){
+           image.src =  'http://' + domain + '/favicon.ico'
+           }else{
+            image.src =  '//i.loli.net/2019/03/19/5c90470b15cca.png'
+           }
+           image.onerror = function(error){
+            error.target.src = '//i.loli.net/2019/03/19/5c9048c41797c.png'
+           }
+           return image
+        }
+
+        function creatButton(id){
+           var buttona = c('button')
+           buttona.textContent = "Edit"
+           buttona.id = id//将每个button命名，方便后面获取button的名字来确定编辑那个
+          //下面是记不得太清楚的，修改buttona，首先要知道你按得那个button，对应上了以后依旧
+          //是用hash，然后对应上你的website，首先你让用户修改website，然后用id对应他，就可以啦
+           buttona.onclick = function(click){
+            console.log(click.target)//这里是每次点击要修改的button
+            //console.log(click['target']['id'])
+            var button2 = click.target
+            var image2 = button2.previousSibling
+            var buttonkey = button2.id//晕、、将key改成后来输入的
+            var x = prompt('请输入你需要存储的网址吧，sama！')
+            hash[buttonkey] = x
+            //嘿嘿，每次修改的hash就可以存储在一个叫做mdzz的仓库啦，随用随取哟，由于只能
+            //存储字符串，因此就要将hash转换为字符串 
+            image2.src = 'http://'+ x + '/favicon.ico'
+            image2.onerror = function(error){
+            error.target.src = '//i.loli.net/2019/03/19/5c9048c41797c.png'
+        
+            }
+            localStorage.setItem('mdzz',JSON.stringify(hash))
+           }
+         return buttona
+        }
+
+        function init(){
+            var keys = {
             0: { 0: 'q', 1: 'w', 2: 'e', 3: 'r', 4: 't', 5: 'y', 6: 'u', 7: 'i', 8: 'o', 9: 'p', length: '10'},
             1: { 0: 'a', 1: 's', 2: 'd', 3: 'f', 4: 'g', 5: 'h', 6: 'j', 7: 'k', 8: 'l' ,length: '9'},
             2: { 0: 'z', 1: 'x', 2: 'c', 3: 'v', 4: 'b', 5: 'n', 6: 'm',length: '7' },
             length: 3
         }
-        var hash = {
+            var hash = {
             q: 'qq.com',
             w: 'weibo.com',
             e: 'ele.me',
@@ -40,61 +103,53 @@
             x: 'xiedaimala.com',
             g: 'github.com/SethLee23/blog'
         }
-        //读档
-        var hashinstorage = JSON.parse(localStorage.getItem('mdzz') || ('null') )
-        if(hashinstorage){
+            var hashinstorage = xxx('mdzz')
+            if(hashinstorage){
             hash = hashinstorage//如果这个档存在，那么就可以直接用这个修改过得版本啦
         }
-       index = 0
-       while(index < keys['length']){
-           divxxx = document.createElement('div')
-           mainxxx.appendChild(divxxx)
+        return{
+            'keys' :keys,
+            'hash':hash
+         }
+        }
+
+        function generateKeyboard(keys,hash){
+           index = 0
+           while(index < keys['length']){
+           var div = c('div')
+           mainxxx.appendChild(div)
+
            index2 = 0
-           row = keys[index]
+           var row = keys[index]
            while(index2 < row['length']){
-           kbdxxx = document.createElement('kbd')
-           kbdxxx.textContent = row[index2]
-           buttona = document.createElement('button')
-           buttona.textContent = "Edit"
-           buttona.id = row[index2]//将每个button命名，方便后面获取button的名字来确定编辑那个
-          //下面是记不得太清楚的，修改buttona，首先要知道你按得那个button，对应上了以后依旧
-          //是用hash，然后对应上你的website，首先你让用户修改website，然后用id对应他，就可以啦
-           buttona.onclick = function(click){
-            console.log('你点击了一下button')
-            console.log(click['target']['id'])
-            buttonkey = click.target.id
-            x = prompt('请输入你需要存储的网址吧，sama！')
-            hash[buttonkey] = x
-            //嘿嘿，每次修改的hash就可以存储在一个叫做mdzz的仓库啦，随用随取哟，由于只能
-            //存储字符串，因此就要将hash转换为字符串 
-            localStorage.setItem('mdzz',JSON.stringify(hash))
-           }
-           kbdxxx.appendChild(buttona)
-           divxxx.appendChild(kbdxxx)
+
+           //新建img，设置src，以及没有网址和错误状态下对应的图片
+           var image = createImage(hash[row[index2]])
+
+           var buttona = creatButton(row[index2])
+
+           var kbd = c('kbd')
+           kbd.textContent = row[index2]
+           kbd.className = 'key'
+           kbd.appendChild(image)
+           kbd.appendChild(buttona)
+           div.appendChild(kbd)
            index2 = index2 + 1
            }
            index = index + 1
        }
-       document.onkeypress = function(onkeypress){
+        }
+
+        function listenToKeyboard(hash){
+           document.onkeypress = function(onkeypress){
            console.log('我发现你按了一个键')
            console.log(onkeypress['key'])
            value = onkeypress['key']
            website = hash[value]
            //location.href = 'http://' + website
-          window.open('http://' + website, '_blank')
+           window.open('http://' + website, '_blank')
        }
-
-//最后的storage有点忘记，首先存储，再在最开始读档
-
-
-
-
-
-
-
-
-
-
+       }
     </script>
 
 

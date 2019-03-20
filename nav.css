@@ -1,5 +1,5 @@
 /*第一步，结构 第二步，创建div和kbd 第三步：监听键盘输入 第四步:对应网址打开 第五步:完善编辑功能，监听获取选择的key 第六步：将每次编辑的网址存储在localstorage中*/
-
+/*1.将key、keyboard样式修改好，加入页面 2.加入背景图片 3.加入logo*/
 
 
 
@@ -12,7 +12,7 @@ div:nth-child(2){
    margin-left: 1em;
 }
 div:nth-child(3){
-    margin-left: 2em;
+    margin-left: 3em;
 }
 kbd{
     text-transform: uppercase;/*又忘记了，减一分*/
@@ -35,4 +35,36 @@ body{
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: url(../pic/nav12.jpg) no-repeat center center;
+}
+.key{
+    width: 50px;
+    height: 40px;
+    background: linear-gradient(to bottom, #292929 0%, #111111 100%);
+    border: none;
+    border: 1px solid #373737;;
+    box-shadow:  0px 0px 0px 2px #1A1B1C,0 0 0 2px #1F2020, 0 2px 0 2px #080808; 
+    color: #C5C5C5;
+    border-radius: 6px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Helvetica, sans-serif;
+    margin:  10px 8px;
+    font-size: 16px;
+    position: relative;
+}
+.wrapper{
+    background: rgba(255, 255, 255, 0.2);
+    padding: 30px;
+    border-radius: 10px;
+}
+img{
+width: 20px;
+height: 20px;
+position: absolute;
+left: 0;
+bottom: 0;
 }
