@@ -38,6 +38,7 @@ body{
     align-items: center;
     height: 100vh;
     background: url(pic/nav12.jpg) no-repeat center center;
+	background-size:cover;
 }
 .key{
     width: 50px;
