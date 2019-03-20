@@ -37,7 +37,7 @@ body{
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: url(../pic/nav12.jpg) no-repeat center center;
+    background: url(pic/nav12.jpg) no-repeat center center;
 }
 .key{
     width: 50px;
